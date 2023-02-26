@@ -8,23 +8,23 @@ mutable struct Args
 end
 
 
-function parse_args(args)
+function parse_args(args::Vector{<:AbstractString})
     # Default settings.
     settings = Args(5, 2, 6, "/usr/share/dict/words")
 
-    function set_n(value)
+    function set_n(value::AbstractString)
         settings.n = parse(Int, value)
     end
 
-    function set_min(value)
+    function set_min(value::AbstractString)
         settings.length_min = parse(Int, value)
     end
 
-    function set_max(value)
+    function set_max(value::AbstractString)
         settings.length_max = parse(Int, value)
     end
 
-    function set_file(value)
+    function set_file(value::AbstractString)
         settings.filepath = value
     end
 
@@ -44,7 +44,7 @@ function parse_args(args)
 end
 
 function load_words(path::AbstractString, min::Int, max::Int)
-    function acceptable(w)
+    function acceptable(w::AbstractString)
         acceptable_length = min <= length(w) <= max
         acceptable_chars = ! occursin("'", w)
 
@@ -57,7 +57,7 @@ end
 function main()
     args = parse_args(ARGS)
     words = load_words(args.filepath, args.length_min, args.length_max)
-    words = shuffle(words)
+    shuffle!(words)
     
     println(join(words[begin:args.n], " "))
 end
