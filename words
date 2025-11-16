@@ -1,0 +1,14 @@
+#! /bin/bash
+
+generate_words() {
+    for n in {1..6}
+    do
+        echo $(julia passphrase.jl)
+    done
+}
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd ${SCRIPT_DIR}
+generate_words | column -t
+cd - > /dev/null
+
