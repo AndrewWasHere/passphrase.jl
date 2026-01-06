@@ -3,12 +3,12 @@
 generate_words() {
     for n in {1..6}
     do
-        echo $(julia passphrase.jl)
+        echo $(julia passphrase.jl $@)
     done
 }
 
 SCRIPT_DIR=$( dirname -- "$( readlink -f -- "$0"; )"; )
 cd ${SCRIPT_DIR}
-generate_words | column -t
+generate_words $@ | column -t
 cd - > /dev/null
 
